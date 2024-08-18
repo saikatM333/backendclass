@@ -2,7 +2,7 @@ const Classroom = require('../models/Classroom');
 const Timetable = require('../models/Timetable');
 
 exports.getMyClassroom = async (req, res) => {
-  const classroom = await Classroom.findOne({ students: req.user._id }).populate('teacher');
+  const classroom = await Classroom.findOne({ students: req.user._id }).populate('teacher').populate('students');
   if (classroom) {
     res.json(classroom);
   } else {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcrypt = require('bcryptjs');
 const connectDB = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI, {
@@ -7,6 +7,8 @@ const connectDB = async () => {
       useUnifiedTopology: true,
     });
     console.log('MongoDB Connected');
+   
+   
   } catch (error) {
     console.error('MongoDB connection error:', error);
     process.exit(1);

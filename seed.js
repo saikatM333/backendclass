@@ -1,31 +1,38 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const connectDB = require('./db');
-const User = require('./models/User');
+const User = require('./models/User'); // Update with the correct path to your User model
 const Classroom = require('./models/Classroom');
 const Timetable = require('./models/Timetable');
+// Function to hash a password
+const hashPassword = async (password) => {
+  return await bcrypt.hash(password, 10);
+};
 
-const seedDB = async () => {
+// Seed data
+const seedData = async () => {
   try {
-    await connectDB();
-
-    // Clear existing data
+    // Connect to MongoDB
+    await mongoose.connect('mongodb://127.0.0.1:27017/classroomDB', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+console.log("statted")
+    // Data to seed
     await User.deleteMany({});
     await Classroom.deleteMany({});
     await Timetable.deleteMany({});
-
-    // Create users
+    // Data to seed
     const principal = await User.create({
       name: 'Principal',
       email: 'principal@example.com',
-      password: await bcrypt.hash('password123', 10),
+      password:'123',
       role: 'Principal',
     });
 
     const teacher1 = await User.create({
       name: 'Teacher One',
       email: 'teacher1@example.com',
-      password: await bcrypt.hash('password123', 10),
+      password: '123',
       role: 'Teacher',
     });
 
@@ -39,7 +46,7 @@ const seedDB = async () => {
     const student1 = await User.create({
       name: 'Student One',
       email: 'student1@example.com',
-      password: await bcrypt.hash('password123', 10),
+      password: '123',
       role: 'Student',
     });
 
@@ -65,12 +72,16 @@ const seedDB = async () => {
       ],
     });
 
-    console.log('Database seeded successfully');
-  } catch (err) {
-    console.error('Error seeding database:', err.message);
+
+
+    console.log('Data seeded successfully!');
+  } catch (error) {
+    console.error('Error seeding data:', error);
   } finally {
+    // Close the connection
     mongoose.connection.close();
   }
 };
 
-seedDB();
+// Run the seed function
+seedData();

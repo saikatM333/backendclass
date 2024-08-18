@@ -4,9 +4,9 @@
   "description": "Classroom Management System Backend",
   "main": "app.js",
   "scripts": {
+    "seed": "node seed.js",
     "start": "node server.js",
-    "server": "nodemon app.js",
-    "seed": "node seed/seed.js"
+    "server": "nodemon app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
